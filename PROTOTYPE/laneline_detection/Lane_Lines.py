@@ -4,8 +4,9 @@ import numpy as np
 import cv2
 import imageio
 imageio.plugins.ffmpeg.download()
-from moviepy.editor import VideoFileClip
-from IPython.display import HTML
+from moviepy.editor import *
+#import moviepy.editor
+#from IPython.display import HTML
 
 def process_image(image):
 # Read in and grayscale the image
@@ -124,4 +125,5 @@ def process_image(image):
 white_output = 'test.mp4'
 clip1 = VideoFileClip("solidYellowLeft.mp4")
 white_clip = clip1.fl_image(process_image)
-white_clip.write_videofile(white_output, audio=False)
+final_clip = clips_array([[clip1,white_clip]])
+final_clip.write_videofile(white_output, audio=False)
