@@ -4,26 +4,21 @@ import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 # from __future__ import print_function
 from imutils.object_detection import non_max_suppression
-from imutils import paths
 import numpy as np
-import argparse
 import imutils
 import cv2
-import time
 
 # construct the argument parse and parse the argument
-'''
-ap = argparse.ArgumentParser()
+'''ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--images", required=True, help="path to images directory")
-args = vars(ap.parse_args())
-'''
+args = vars(ap.parse_args())'''
 
 # initialize the HOG descriptor/person
 def pedestrian_detection_image():
     hog = cv2.HOGDescriptor()
     hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
-    image = mpimg.imread("webwxgetmsgimg.jpeg")
+    image = mpimg.imread("test_pedestrian.jpg")
     image = imutils.resize(image, width=min(400, image.shape[1]))
     orig = image.copy()
 
@@ -46,12 +41,6 @@ def pedestrian_detection_image():
         cv2.rectangle(image, (xA, yA), (xB, yB), (0, 255, 0), 2)
 
     # show some information on the number of bounding boxes
-    '''
-    filename = imagePath[imagePath.rfind("/") + 1:]
-    print("[INFO] {}: {} original boxes, {} after suppression".format(
-        filename, len(rects), len(pick)))
-    print("time:", end - start)
-    '''
 
     # show the output images
     #cv2.imshow("Before NMS", orig)
