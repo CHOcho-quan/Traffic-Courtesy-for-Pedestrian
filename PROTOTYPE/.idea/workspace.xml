@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dbd1cf1d-2c38-4c99-91b3-9bcbb5c02e2d" name="Default" comment="ADD">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laneline_detection/Lane_Lines_Image.py" beforeDir="false" afterPath="$PROJECT_DIR$/laneline_detection/Lane_Lines_Image.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laneline_detection/Lane_Lines_Video.py" beforeDir="false" afterPath="$PROJECT_DIR$/laneline_detection/Lane_Lines_Video.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laneline_detection/test_pages/test_curb2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/laneline_detection/test_pages/test_curb2.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laneline_detection/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/laneline_detection/utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,8 +18,8 @@
       <file leaf-file-name="Lane_Lines_Video.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/laneline_detection/Lane_Lines_Video.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="58" column="18" selection-start-line="58" selection-start-column="18" selection-end-line="58" selection-end-column="18" />
+            <state relative-caret-position="197">
+              <caret line="159" column="23" selection-start-line="159" selection-start-column="23" selection-end-line="159" selection-end-column="23" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -32,8 +30,8 @@
       <file leaf-file-name="Lane_Lines_Image.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/laneline_detection/Lane_Lines_Image.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="163" column="11" selection-start-line="163" selection-start-column="11" selection-end-line="163" selection-end-column="11" />
+            <state relative-caret-position="-1576">
+              <caret line="113" column="42" selection-start-line="113" selection-start-column="42" selection-end-line="113" selection-end-column="42" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -44,8 +42,8 @@
       <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/laneline_detection/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1761">
-              <caret line="125" column="34" selection-start-line="125" selection-start-column="34" selection-end-line="125" selection-end-column="34" />
+            <state relative-caret-position="60">
+              <caret line="89" column="37" selection-start-line="89" selection-start-column="37" selection-end-line="89" selection-end-column="37" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -81,7 +79,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="144" />
+    <option name="x" value="37" />
     <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="721" />
@@ -227,7 +225,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="144" y="23" width="1280" height="721" extended-state="0" />
+    <frame x="37" y="23" width="1280" height="721" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24609375" />
@@ -427,13 +425,6 @@
     <entry file="file://$PROJECT_DIR$/laneline_detection/figure_6.png" />
     <entry file="file://$PROJECT_DIR$/laneline_detection/figure_3.png" />
     <entry file="file://$PROJECT_DIR$/laneline_detection/Finding Lane Lines on the Road- Jack Qian.py" />
-    <entry file="file:///Library/Python/2.7/site-packages/moviepy/video/io/ffmpeg_reader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="271" selection-start-line="271" selection-end-line="271" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/laneline_detection/test_pages/test4.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -455,39 +446,46 @@
     <entry file="file://$PROJECT_DIR$/laneline_detection/test_pages/test1.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/laneline_detection/test_pages/test2.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/laneline_detection/test_pages/test5.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/laneline_detection/test_pages/test6.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/laneline_detection/utils.py">
+    <entry file="file:///Library/Python/2.7/site-packages/moviepy/video/io/ffmpeg_reader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1761">
-          <caret line="125" column="34" selection-start-line="125" selection-start-column="34" selection-end-line="125" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="136">
+          <caret line="271" selection-start-line="271" selection-end-line="271" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/laneline_detection/test_pages/test2.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/laneline_detection/Lane_Lines_Image.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="163" column="11" selection-start-line="163" selection-start-column="11" selection-end-line="163" selection-end-column="11" />
+        <state relative-caret-position="-1576">
+          <caret line="113" column="42" selection-start-line="113" selection-start-column="42" selection-end-line="113" selection-end-column="42" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/laneline_detection/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="89" column="37" selection-start-line="89" selection-start-column="37" selection-end-line="89" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/laneline_detection/Lane_Lines_Video.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="58" column="18" selection-start-line="58" selection-start-column="18" selection-end-line="58" selection-end-column="18" />
+        <state relative-caret-position="197">
+          <caret line="159" column="23" selection-start-line="159" selection-start-column="23" selection-end-line="159" selection-end-column="23" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>

@@ -15,7 +15,7 @@ def hough_filter(lines):
             theta = abs(math.atan((y1 - y2) / float(x1 - x2)) * 180 / math.pi)
             norm = [(math.sqrt((y1 - y2) ** 2 + (x1 - x2) ** 2), fit[0], fit[1]), (x1, x2, y1, y2)]
             if norms.keys() is None:
-                if (80 > theta) & (theta > 20):
+                if (75 > theta) & (theta > 15):
                     norms[theta] = [norm]
             else:
                 for t in norms.keys():
@@ -27,7 +27,7 @@ def hough_filter(lines):
                     flag = False
                     continue
                 else:
-                    if (80 > theta) & (theta > 20):
+                    if (75 > theta) & (theta > 15):
                         norms[theta] = [norm]
 
     return norms
@@ -87,7 +87,7 @@ def average_lines(lines, imshape):
     return left_lane, right_lane
 
 
-def canny_thresh(img, low=50, high=150):
+def canny_thresh(img, low=30, high=100):
     canny = cv2.Canny(img, low, high)
     binary_out = np.zeros_like(canny)
     binary_out[canny == 255] = 1

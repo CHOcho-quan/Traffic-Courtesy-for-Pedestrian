@@ -13,9 +13,15 @@ import utils
 # from IPython.display import HTML
 
 def process_image(image):
+    # Read in and grayscale the image
+    # image = cv2.imread('./test_pages/test_sY.jpg')
+    # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
     enhance_white = utils.white_enhance(image)
     enhance_yellow = utils.yellow_enhance(image)
     final_enhance = cv2.addWeighted(enhance_white, 0.8, enhance_yellow, 1, 0)
+    # plt.imshow(final_enhance)
+    # plt.show()
 
     # Define a kernel size and apply Gaussian smoothing
     kernel_size = 5
@@ -30,33 +36,48 @@ def process_image(image):
     combined = np.zeros_like(canny)
     combined[(canny > 0) | (hls > 0) | (white > 0) | (yellow > 0)] = 1
 
+    # plt.imshow(canny)
+    # plt.show()
+
     # Next we'll create a masked canny image using cv2.fillPoly()
     mask = np.zeros_like(canny)
     ignore_mask_color = 255
 
     # This time we are defining a four sided polygon to mask
+    # imshape = image.shape
+    # vertices = np.array([[(imshape[1] * 5 / 12, imshape[0] / 2), (imshape[1] * 7 / 12, imshape[0] / 2),
+    #                       (imshape[1], imshape[0] * 3 / 4), (imshape[1], imshape[0]),
+    #                       (0, imshape[0]), (0, imshape[0] * 3 / 4)]])
+    # vertices2 = np.array([[(imshape[1] / 4, imshape[0]), (imshape[1] * 3 / 4, imshape[0]),
+    #                        (imshape[1] / 2, imshape[0] / 2)]])
+    # cv2.fillPoly(mask, vertices, ignore_mask_color)
+    # cv2.fillPoly(mask, vertices2, 0)
+
     imshape = image.shape
     vertices1 = np.array([[(0, imshape[0]), (imshape[1] / 3, 1.7 * imshape[0] / 3),
                            (2 * imshape[1] / 3, 1.7 * imshape[0] / 3), (imshape[1], imshape[0])]], dtype=np.int32)
     cv2.fillPoly(mask, vertices1, ignore_mask_color)
-    vertices2 = np.array([[(imshape[1] / 3, imshape[0]), (imshape[1] * 0.8 / 2, 1.7 * imshape[0] / 3),
-                           (imshape[1] * 1.2 / 2, 1.7 * imshape[0] / 3), (2 * imshape[1] / 3, imshape[0])]], dtype=np.int32)
+    vertices2 = np.array([[(imshape[1] / 3, imshape[0]), (imshape[1] / 2, 1.7 * imshape[0] / 3), (2 * imshape[1] / 3, imshape[0])]],
+                         dtype=np.int32)
     cv2.fillPoly(mask, vertices2, 0)
     vertices3 = np.array([[(0, imshape[0]), (imshape[1] / 3, 1.7 * imshape[0] / 3),
-                           (0, 2 * imshape[0] / 3)]], dtype=np.int32)
+                           (0, 7 * imshape[0] / 8)]], dtype=np.int32)
     cv2.fillPoly(mask, vertices3, ignore_mask_color)
     vertices4 = np.array([[(2 * imshape[1] / 3, 1.7 * imshape[0] / 3), (imshape[1], imshape[0]),
-                           (imshape[1], 2 * imshape[0] / 3)]], dtype=np.int32)
+                           (imshape[1], 7 * imshape[0] / 8)]], dtype=np.int32)
     cv2.fillPoly(mask, vertices4, ignore_mask_color)
+
     masked_edges = cv2.bitwise_and(canny, mask)
     # plt.imshow(mask)
+    # plt.show()
+    # plt.imshow(masked_edges)
     # plt.show()
 
     # Define the Hough transform parameters
     # Make a blank the same size as our image to draw on
     rho = 1  # distance resolution in pixels of the Hough grid
     theta = np.pi / 180  # angular resolution in radians of the Hough grid
-    threshold = 35  # minimum number of votes (intersections in Hough grid cell)
+    threshold = 30  # minimum number of votes (intersections in Hough grid cell)
     min_line_length = 50  # minimum number of pixels making up a line
     max_line_gap = 15  # maximum gap in pixels between connectable line segments
     line_image = np.copy(image) * 0  # creating a blank to draw lines on
@@ -72,26 +93,27 @@ def process_image(image):
 
     norms = utils.hough_filter(lines)
 
-    m_avg_right = []
-    m_avg_left = []
-    b_avg_left = []
-    b_avg_right = []
+    m_total_right = 0
+    n_total_right = 0
+    m_total_left = 0
+    n_total_left = 0
+    b_total_right = 0
+    b_total_left = 0
     for t in norms.keys():
         for norm in norms[t]:
-            for x1, x2, y1, y2 in norm[1:]:
-                fit = np.polyfit((x1, x2), (y1, y2), 1)
-                m = fit[0]
-                b = fit[1]
+            for n, m, b in norm[0:1]:
                 if m > 0:
-                    m_avg_right.append(m)
-                    b_avg_right.append(b)
+                    m_total_right += m * n
+                    n_total_right += n
+                    b_total_right += b * n
                 else:
-                    m_avg_left.append(m)
-                    b_avg_left.append(b)
+                    m_total_left += m * n
+                    n_total_left += n
+                    b_total_left += b * n
 
-    if len(m_avg_left) != 0 or len(b_avg_left) != 0:
-        b_left = np.mean(np.array(b_avg_left))
-        m_left = np.mean(np.array(m_avg_left))
+    if m_total_left != 0 or b_total_left != 0:
+        b_left = b_total_left / n_total_left
+        m_left = m_total_left / n_total_left
         # print b_avg_left, m_avg_left
         '''y = mx + b'''
         if b_left < imshape[0]:
@@ -104,9 +126,9 @@ def process_image(image):
         xa2 = (ya2 - b_left) / m_left
         cv2.line(line_image, (int(xa), int(ya)), (int(xa2), int(ya2)), (255, 0, 0), 5)
 
-    if len(m_avg_right) != 0 or len(b_avg_right) != 0:
-        b_right = np.mean(np.array(b_avg_right))
-        m_right = np.mean(np.array(m_avg_right))
+    if m_total_right != 0 or b_total_right != 0:
+        b_right = b_total_right / n_total_right
+        m_right = m_total_right / n_total_right
         '''y = mx + b'''
         xtry = imshape[1]
         ytry = imshape[1] * m_right + b_right
@@ -120,6 +142,8 @@ def process_image(image):
         xb1 = (yb1 - b_right) / m_right
         cv2.line(line_image, (int(xb), int(yb)), (int(xb1), int(yb1)), (255, 0, 0), 5)
 
+    # plt.imshow(line_image)
+    # plt.show()
     # Create a "color" binary image to combine with line image
 
     # color_edges = np.dstack((canny, canny, canny))
@@ -127,12 +151,14 @@ def process_image(image):
     # Draw the lines on the edge image
 
     image_result = cv2.addWeighted(image, 0.8, line_image, 1, 0)
+    # plt.imshow(image_result)
+    # plt.show()
 
     return image_result
 
 
-white_output = 'result2.mp4'
-clip1 = VideoFileClip("test2.mp4")
+white_output = 'result3.mp4'
+clip1 = VideoFileClip("test3.mp4")
 white_clip = clip1.fl_image(process_image)
 final_clip = clips_array([[clip1, white_clip]])
 final_clip.write_videofile(white_output, audio=False)
