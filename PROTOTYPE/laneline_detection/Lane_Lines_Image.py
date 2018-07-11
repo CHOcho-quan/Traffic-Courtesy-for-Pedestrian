@@ -13,12 +13,10 @@ imageio.plugins.ffmpeg.download()
 # import moviepy.editor
 # from IPython.display import HTML
 
-def process_image():
+def process_image1():
     # Read in and grayscale the image
-    image = mpimg.imread('./test_pages/test2.jpg')
-    gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-    plt.imshow(gray, plt.gray())
-    plt.show()
+    image = cv2.imread('./test_pages/test7.jpg')
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
     enhance_white = utils.white_enhance(image)
     enhance_yellow = utils.yellow_enhance(image)
@@ -48,20 +46,30 @@ def process_image():
 
     # This time we are defining a four sided polygon to mask
     imshape = image.shape
-    vertices = np.array([[(0, imshape[0]), (imshape[1] / 3, 1.7 * imshape[0] / 3),
-                          (2 * imshape[1] / 3, 1.7 * imshape[0] / 3), (imshape[1], imshape[0])]], dtype=np.int32)
-    cv2.fillPoly(mask, vertices, ignore_mask_color)
+    vertices1 = np.array([[(0, imshape[0]), (imshape[1] / 3, 1.7 * imshape[0] / 3),
+                           (2 * imshape[1] / 3, 1.7 * imshape[0] / 3), (imshape[1], imshape[0])]], dtype=np.int32)
+    cv2.fillPoly(mask, vertices1, ignore_mask_color)
+    vertices2 = np.array([[(imshape[1] / 3, imshape[0]), (imshape[1] * 0.8 / 2, 1.7 * imshape[0] / 3),
+                           (imshape[1] * 1.2 / 2, 1.7 * imshape[0] / 3), (2 * imshape[1] / 3, imshape[0])]],
+                         dtype=np.int32)
+    cv2.fillPoly(mask, vertices2, 0)
+    vertices3 = np.array([[(0, imshape[0]), (imshape[1] / 3, 1.7 * imshape[0] / 3),
+                           (0, 2 * imshape[0] / 3)]], dtype=np.int32)
+    cv2.fillPoly(mask, vertices3, ignore_mask_color)
+    vertices4 = np.array([[(2 * imshape[1] / 3, 1.7 * imshape[0] / 3), (imshape[1], imshape[0]),
+                           (imshape[1], 2 * imshape[0] / 3)]], dtype=np.int32)
+    cv2.fillPoly(mask, vertices4, ignore_mask_color)
     masked_edges = cv2.bitwise_and(canny, mask)
-    plt.imshow(mask)
+    plt.imshow(masked_edges)
     plt.show()
 
     # Define the Hough transform parameters
     # Make a blank the same size as our image to draw on
     rho = 2  # distance resolution in pixels of the Hough grid
     theta = np.pi / 180  # angular resolution in radians of the Hough grid
-    threshold = 15  # minimum number of votes (intersections in Hough grid cell)
-    min_line_length = 40  # minimum number of pixels making up a line
-    max_line_gap = 20  # maximum gap in pixels between connectable line segments
+    threshold = 35  # minimum number of votes (intersections in Hough grid cell)
+    min_line_length = 50  # minimum number of pixels making up a line
+    max_line_gap = 15  # maximum gap in pixels between connectable line segments
     line_image = np.copy(image) * 0  # creating a blank to draw lines on
 
     # Run Hough on edge detected image
@@ -72,10 +80,6 @@ def process_image():
     # print(lines)
 
     # Iterate over the output "lines" and draw lines on a blank image
-    left = (0, 0)
-    right = (0, 0)
-    leftnum = 0
-    rightnum = 0
 
     norms = utils.hough_filter(lines)
 
@@ -85,37 +89,149 @@ def process_image():
     #         if (80 > theta) & (theta > 20):
     #             cv2.line(line_image, (x1, y1), (x2, y2), (255, 0, 0), 5)
 
+    m_avg_right = []
+    m_avg_left = []
+    b_avg_left = []
+    b_avg_right = []
     for t in norms.keys():
         for norm in norms[t]:
             for x1, x2, y1, y2 in norm[1:]:
                 cv2.line(line_image, (x1, y1), (x2, y2), (255, 0, 0), 5)
+    # Create a "color" binary image to combine with line image
 
-            '''
-            fit_left = np.polyfit((x1, x2), (y1, y2), 1)
+    # color_edges = np.dstack((canny, canny, canny))
 
-            if fit_left[0]>0:
-                left=left+fit_left
-                leftnum=leftnum+1
+    # Draw the lines on the edge image
 
-            else:
-                right=right+fit_left
-                rightnum=rightnum+1
+    image_result = cv2.addWeighted(image, 0.8, line_image, 1, 0)
+    plt.imshow(image_result)
+    plt.show()
 
-    left=left/leftnum
-    right=right/rightnum
-    print(left,right)
+    return image_result
 
-    x1_b=int((imshape[0]-left[1])/left[0])
-    x1_t=int((imshape[0]/2-left[1])/left[0])
+def process_image():
+    # Read in and grayscale the image
+    image = cv2.imread('./test_pages/test7.jpg')
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-    cv2.line(line_image,(x1_b,imshape[0]),(x1_t,imshape[0]/2),(255,0,0),5)
+    enhance_white = utils.white_enhance(image)
+    enhance_yellow = utils.yellow_enhance(image)
+    final_enhance = cv2.addWeighted(enhance_white, 0.8, enhance_yellow, 1, 0)
+    plt.imshow(final_enhance)
+    plt.show()
 
-    x1_b=int((imshape[0]-right[1])/right[0])
-    x1_t=int((imshape[0]/2-right[1])/right[0])
+    # Define a kernel size and apply Gaussian smoothing
+    kernel_size = 5
+    blur_gray = cv2.GaussianBlur(final_enhance, (kernel_size, kernel_size), 0)
 
-    cv2.line(line_image,(x1_b,imshape[0]),(x1_t,imshape[0]/2),(255,0,0),5)
-    #plt.imshow(line_image)
-    #plt.show()'''
+    # Define our parameters for Canny and apply
+    canny = utils.canny_thresh(blur_gray)
+    hls = utils.hls_thresh(image)
+    white = utils.thresh_white(image)
+    yellow = utils.thresh_yellow(image)
+
+    combined = np.zeros_like(canny)
+    combined[(canny > 0) | (hls > 0) | (white > 0) | (yellow > 0)] = 1
+
+    plt.imshow(canny)
+    plt.show()
+
+    # Next we'll create a masked canny image using cv2.fillPoly()
+    mask = np.zeros_like(canny)
+    ignore_mask_color = 255
+
+    # This time we are defining a four sided polygon to mask
+    imshape = image.shape
+    vertices1 = np.array([[(0, imshape[0]), (imshape[1] / 3, 1.7 * imshape[0] / 3),
+                           (2 * imshape[1] / 3, 1.7 * imshape[0] / 3), (imshape[1], imshape[0])]], dtype=np.int32)
+    cv2.fillPoly(mask, vertices1, ignore_mask_color)
+    vertices2 = np.array([[(imshape[1] / 3, imshape[0]), (imshape[1] * 0.8 / 2, 1.7 * imshape[0] / 3),
+                           (imshape[1] * 1.2 / 2, 1.7 * imshape[0] / 3), (2 * imshape[1] / 3, imshape[0])]],
+                         dtype=np.int32)
+    cv2.fillPoly(mask, vertices2, 0)
+    vertices3 = np.array([[(0, imshape[0]), (imshape[1] / 3, 1.7 * imshape[0] / 3),
+                           (0, 2 * imshape[0] / 3)]], dtype=np.int32)
+    cv2.fillPoly(mask, vertices3, ignore_mask_color)
+    vertices4 = np.array([[(2 * imshape[1] / 3, 1.7 * imshape[0] / 3), (imshape[1], imshape[0]),
+                           (imshape[1], 2 * imshape[0] / 3)]], dtype=np.int32)
+    cv2.fillPoly(mask, vertices4, ignore_mask_color)
+    masked_edges = cv2.bitwise_and(canny, mask)
+    plt.imshow(mask)
+    plt.show()
+
+    # Define the Hough transform parameters
+    # Make a blank the same size as our image to draw on
+    rho = 1  # distance resolution in pixels of the Hough grid
+    theta = np.pi / 180  # angular resolution in radians of the Hough grid
+    threshold = 40  # minimum number of votes (intersections in Hough grid cell)
+    min_line_length = 50  # minimum number of pixels making up a line
+    max_line_gap = 15  # maximum gap in pixels between connectable line segments
+    line_image = np.copy(image) * 0  # creating a blank to draw lines on
+
+    # Run Hough on edge detected image
+    # Output "lines" is an array containing endpoints of detected line segments
+    lines = cv2.HoughLinesP(masked_edges, rho, theta, threshold, np.array([]),
+                            min_line_length, max_line_gap)
+
+    # print(lines)
+
+    # Iterate over the output "lines" and draw lines on a blank image
+
+    norms = utils.hough_filter(lines)
+
+    # for line in lines:
+    #     for x1, y1, x2, y2 in line:
+    #         theta = abs(math.atan((y1 - y2) / float(x1 - x2)) * 180 / math.pi)
+    #         if (80 > theta) & (theta > 20):
+    #             cv2.line(line_image, (x1, y1), (x2, y2), (255, 0, 0), 5)
+
+    m_avg_right = []
+    m_avg_left = []
+    b_avg_left = []
+    b_avg_right = []
+    for t in norms.keys():
+        for norm in norms[t]:
+            for x1, x2, y1, y2 in norm[1:]:
+                fit = np.polyfit((x1, x2), (y1, y2), 1)
+                m = fit[0]
+                b = fit[1]
+                if m > 0:
+                    m_avg_right.append(m)
+                    b_avg_right.append(b)
+                else:
+                    m_avg_left.append(m)
+                    b_avg_left.append(b)
+
+    if len(m_avg_left) != 0 or len(b_avg_left) != 0:
+        b_left = np.mean(np.array(b_avg_left))
+        m_left = np.mean(np.array(m_avg_left))
+        # print b_avg_left, m_avg_left
+        '''y = mx + b'''
+        if b_left < imshape[0]:
+            xa = 0
+            ya = b_left
+        else:
+            ya = imshape[0]
+            xa = (ya - b_left) / m_left
+        ya2 = imshape[0] * 1.8 / 3
+        xa2 = (ya2 - b_left) / m_left
+        cv2.line(line_image, (int(xa), int(ya)), (int(xa2), int(ya2)), (255, 0, 0), 5)
+
+    if len(m_avg_right) != 0 or len(b_avg_right) != 0:
+        b_right = np.mean(np.array(b_avg_right))
+        m_right = np.mean(np.array(m_avg_right))
+        '''y = mx + b'''
+        xtry = imshape[1]
+        ytry = imshape[1] * m_right + b_right
+        if ytry < imshape[0]:
+            xb = xtry
+            yb = ytry
+        else:
+            yb = imshape[0]
+            xb = (yb - b_right) / m_right
+        yb1 = imshape[0] * 1.8 / 3
+        xb1 = (yb1 - b_right) / m_right
+        cv2.line(line_image, (int(xb), int(yb)), (int(xb1), int(yb1)), (255, 0, 0), 5)
 
     plt.imshow(line_image)
     plt.show()
@@ -132,4 +248,5 @@ def process_image():
     return image_result
 
 
+process_image1()
 process_image()
