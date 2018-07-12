@@ -11,9 +11,11 @@ def detect_lines(lines1, imshape):
     for t in norms.keys():
         for norm in norms[t]:
             for n, m, b in norm[0:1]:
-                if m > 0 & int(n) > 100:
+                # print m
+                # print n
+                if (m > 0) and (int(n) > 50):
                     right = True
-                if m < 0 & int(n) > 100:
+                if (m < 0) and (int(n) > 50):
                     left = True
     return left, right
 
@@ -88,11 +90,11 @@ def hough_filter(lines):
             theta = abs(math.atan((y1 - y2) / float(x1 - x2)) * 180 / math.pi)
             norm = [(math.sqrt((y1 - y2) ** 2 + (x1 - x2) ** 2), fit[0], fit[1]), (x1, x2, y1, y2)]
             if norms.keys() is None:
-                if (75 > theta) & (theta > 15):
+                if (75 > theta) and (theta > 15):
                     norms[theta] = [norm]
             else:
                 for t in norms.keys():
-                    if abs(t - theta) < 5 & (((float(norms[t][0][0][1]) - fit[0]) ** 2 + (
+                    if (abs(t - theta) < 5) and (((float(norms[t][0][0][1]) - fit[0]) ** 2 + (
                             float(norms[t][0][0][2]) - fit[1]) ** 2) ** 0.5 < 10):
                         norms[t].append(norm)
                         flag = True
@@ -101,7 +103,7 @@ def hough_filter(lines):
                     flag = False
                     continue
                 else:
-                    if (75 > theta) & (theta > 15):
+                    if (75 > theta) and (theta > 15):
                         norms[theta] = [norm]
 
     return norms
