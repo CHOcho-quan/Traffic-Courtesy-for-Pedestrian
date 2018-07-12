@@ -50,7 +50,7 @@ def pedestrian_detection_image(image):
     return image
 
 white_output = 'result3.mp4'
-clip1 = VideoFileClip("test1.avi")
+clip1 = VideoFileClip("test1.avi").subclip(0, 30)
 white_clip = clip1.fl_image(pedestrian_detection_image)
 final_clip = clips_array([[clip1,white_clip]])
 final_clip.write_videofile(white_output, audio=False)

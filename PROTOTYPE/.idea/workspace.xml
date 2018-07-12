@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dbd1cf1d-2c38-4c99-91b3-9bcbb5c02e2d" name="Default" comment="ADD">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laneline_detection/Lane_Lines_Image.py" beforeDir="false" afterPath="$PROJECT_DIR$/laneline_detection/Lane_Lines_Image.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laneline_detection/Lane_Lines_Video.py" beforeDir="false" afterPath="$PROJECT_DIR$/laneline_detection/Lane_Lines_Video.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laneline_detection/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/laneline_detection/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pedestrian _detection/pedestrian_detection_image.py" beforeDir="false" afterPath="$PROJECT_DIR$/pedestrian _detection/pedestrian_detection_image.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pedestrian _detection/pedestrian_detection_video.py" beforeDir="false" afterPath="$PROJECT_DIR$/pedestrian _detection/pedestrian_detection_video.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,23 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Lane_Lines_Video.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/laneline_detection/Lane_Lines_Video.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="159" column="23" selection-start-line="159" selection-start-column="23" selection-end-line="159" selection-end-column="23" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Lane_Lines_Image.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/laneline_detection/Lane_Lines_Image.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1576">
-              <caret line="113" column="42" selection-start-line="113" selection-start-column="42" selection-end-line="113" selection-end-column="42" />
+            <state relative-caret-position="262">
+              <caret line="189" column="81" selection-start-line="189" selection-start-column="81" selection-end-line="189" selection-end-column="81" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -42,10 +33,22 @@
       <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/laneline_detection/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="89" column="37" selection-start-line="89" selection-start-column="37" selection-end-line="89" selection-end-column="37" />
+            <state relative-caret-position="195">
+              <caret line="13" column="38" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Lane_Lines_Video.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/laneline_detection/Lane_Lines_Video.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1695">
+              <caret line="113" column="23" selection-start-line="113" selection-start-column="23" selection-end-line="113" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -60,6 +63,11 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>plt.im</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -72,15 +80,17 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/laneline_detection/Finding Lane Lines on the Road- Jack Qian.py" />
-        <option value="$PROJECT_DIR$/laneline_detection/utils.py" />
+        <option value="$PROJECT_DIR$/pedestrian _detection/pedestrian_detection_video.py" />
+        <option value="$PROJECT_DIR$/pedestrian _detection/pedestrian_detection_image.py" />
         <option value="$PROJECT_DIR$/laneline_detection/Lane_Lines_Image.py" />
+        <option value="$PROJECT_DIR$/laneline_detection/utils.py" />
         <option value="$PROJECT_DIR$/laneline_detection/Lane_Lines_Video.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="37" />
-    <option name="y" value="23" />
+    <option name="x" value="1411" />
+    <option name="y" value="-19" />
     <option name="width" value="1280" />
     <option name="height" value="721" />
   </component>
@@ -90,6 +100,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -108,11 +119,15 @@
               <item name="laneline_detection" type="462c0819:PsiDirectoryNode" />
               <item name="test_pages" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="PROTOTYPE" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PROTOTYPE" type="462c0819:PsiDirectoryNode" />
+              <item name="pedestrian _detection" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -172,7 +187,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="Unnamed" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="PedestrianImage" type="PythonConfigurationType" factoryName="Python">
       <module name="PROTOTYPE" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -180,18 +195,37 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="/usr/bin/python" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/laneline_detection" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pedestrian _detection" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/laneline_detection/Finding Lane Lines on the Road- Jack Qian.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pedestrian _detection/pedestrian_detection_image.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="PedestrianVideo" type="PythonConfigurationType" factoryName="Python">
+      <module name="PROTOTYPE" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pedestrian _detection" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pedestrian _detection/pedestrian_detection_video.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
     <list>
-      <item itemvalue="Python.Unnamed" />
+      <item itemvalue="Python.PedestrianVideo" />
+      <item itemvalue="Python.PedestrianImage" />
       <item itemvalue="Python.LaneLineVideo" />
       <item itemvalue="Python.LaneLineImage" />
     </list>
@@ -225,45 +259,44 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="37" y="23" width="1280" height="721" extended-state="0" />
-    <editor active="true" />
+    <frame x="1411" y="-19" width="1280" height="721" extended-state="0" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24609375" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32921174" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3168909" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32766616" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3980447" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39876354" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32921174" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24609375" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32766616" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Python Console" order="7" />
     </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -275,6 +308,36 @@
     <option name="LAST_COMMIT_MESSAGE" value="ADD Filter of Hough Lines!" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/laneline_detection/Lane_Lines_Image.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laneline_detection/Lane_Lines_Video.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1680">
+          <caret line="116" column="86" selection-start-line="116" selection-start-column="86" selection-end-line="116" selection-end-column="86" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/laneline_detection/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="10" column="21" lean-forward="true" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/laneline_detection/Lane_Lines_Image.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -459,13 +522,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pedestrian _detection/pedestrian_detection_video.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="52" column="48" selection-start-line="52" selection-start-column="48" selection-end-line="52" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pedestrian _detection/pedestrian_detection_image.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="47" lean-forward="true" selection-start-line="16" selection-start-column="47" selection-end-line="16" selection-end-column="47" />
+          <folding>
+            <element signature="e#95#132#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/laneline_detection/test_pages/test2.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/laneline_detection/Lane_Lines_Image.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1576">
-          <caret line="113" column="42" selection-start-line="113" selection-start-column="42" selection-end-line="113" selection-end-column="42" />
+        <state relative-caret-position="262">
+          <caret line="189" column="81" selection-start-line="189" selection-start-column="81" selection-end-line="189" selection-end-column="81" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
@@ -474,8 +557,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/laneline_detection/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="89" column="37" selection-start-line="89" selection-start-column="37" selection-end-line="89" selection-end-column="37" />
+        <state relative-caret-position="195">
+          <caret line="13" column="38" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
@@ -484,8 +567,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/laneline_detection/Lane_Lines_Video.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="159" column="23" selection-start-line="159" selection-start-column="23" selection-end-line="159" selection-end-column="23" />
+        <state relative-caret-position="1695">
+          <caret line="113" column="23" selection-start-line="113" selection-start-column="23" selection-end-line="113" selection-end-column="23" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
