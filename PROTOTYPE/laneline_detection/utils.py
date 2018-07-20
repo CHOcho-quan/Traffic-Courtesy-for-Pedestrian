@@ -11,9 +11,10 @@ def detect_lines(lines1, imshape):
     for t in norms.keys():
         for norm in norms[t]:
             for n, m, b in norm[0:1]:
-                if m > 0 & int(n) > 100:
+                # y = mx + b
+                if (m > 0) and (int(n) > 50):
                     right = True
-                if m < 0 & int(n) > 100:
+                if (m < 0) and (int(n) > 50):
                     left = True
     return left, right
 
@@ -88,11 +89,11 @@ def hough_filter(lines):
             theta = abs(math.atan((y1 - y2) / float(x1 - x2)) * 180 / math.pi)
             norm = [(math.sqrt((y1 - y2) ** 2 + (x1 - x2) ** 2), fit[0], fit[1]), (x1, x2, y1, y2)]
             if norms.keys() is None:
-                if (75 > theta) & (theta > 15):
+                if (75 > theta) and (theta > 15):
                     norms[theta] = [norm]
             else:
                 for t in norms.keys():
-                    if abs(t - theta) < 5 & (((float(norms[t][0][0][1]) - fit[0]) ** 2 + (
+                    if (abs(t - theta) < 5) and (((float(norms[t][0][0][1]) - fit[0]) ** 2 + (
                             float(norms[t][0][0][2]) - fit[1]) ** 2) ** 0.5 < 10):
                         norms[t].append(norm)
                         flag = True
@@ -101,7 +102,7 @@ def hough_filter(lines):
                     flag = False
                     continue
                 else:
-                    if (75 > theta) & (theta > 15):
+                    if (75 > theta) and (theta > 15):
                         norms[theta] = [norm]
 
     return norms
@@ -116,7 +117,7 @@ def average_lines(lines, imshape):
                 fit = np.polyfit((x1, x2), (y1, y2), 1)
                 m = fit[0]
                 b = fit[1]
-                print m, b
+                # print m, b
                 norm = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
                 if m > 0:
                     hough_pts['m_right'].append(m)
@@ -160,6 +161,41 @@ def average_lines(lines, imshape):
         right_lane = [0, 0, 0, 0]
 
     return left_lane, right_lane
+
+
+def abs_sobel_thresh(img, orient='x', thresh_min=90, thresh_max=255):
+    if orient == 'x':
+        abs_sobel = np.absolute(cv2.Sobel(img, cv2.CV_64F, 1, 0))
+    if orient == 'y':
+        abs_sobel = np.absolute(cv2.Sobel(img, cv2.CV_64F, 0, 1))
+
+    binary_output = np.zeros_like(abs_sobel)
+    binary_output[(abs_sobel >= thresh_min) & (abs_sobel <= thresh_max)] = 1
+
+    # Return the result
+    return binary_output
+
+
+def mag_thresh(img, sobel_kernel=3, mag_thresh=(90, 255)):
+    sobelx = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=sobel_kernel)
+    sobely = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=sobel_kernel)
+    gradmag = np.sqrt(sobelx ** 2 + sobely ** 2)
+
+    binary_output = np.zeros_like(gradmag)
+    binary_output[(gradmag >= mag_thresh[0]) & (gradmag <= mag_thresh[1])] = 1
+
+    return binary_output
+
+
+def dir_threshold(img, sobel_kernel=3, thresh=(0, np.pi / 2)):
+    sobelx = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=sobel_kernel)
+    sobely = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=sobel_kernel)
+
+    absgraddir = np.arctan2(np.absolute(sobely), np.absolute(sobelx))
+    binary_output = np.zeros_like(absgraddir)
+    binary_output[(absgraddir >= thresh[0]) & (absgraddir <= thresh[1])] = 1
+
+    return binary_output
 
 
 # Canny filter

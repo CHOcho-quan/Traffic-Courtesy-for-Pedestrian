@@ -4,22 +4,21 @@ from __future__ import print_function
 from imutils.object_detection import non_max_suppression
 from imutils import paths
 import numpy as np
-import argparse
 import imutils
 import cv2
 import time
 
 # construct the argument parse and parse the argument
-ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--images", required=True, help="path to images directory")
-args = vars(ap.parse_args())
+# ap = argparse.ArgumentParser()
+# ap.add_argument("-i", "--images", required=True, help="path to images directory")
+# args = vars(ap.parse_args())
 
 # initialize the HOG descriptor/person detector
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
 # loop over the image paths
-for imagePath in paths.list_images(args["images"]):
+for imagePath in paths.list_images("images"):
     start = time.time()
 
     # load the image and resize it to (1) reduce detection time
@@ -29,8 +28,8 @@ for imagePath in paths.list_images(args["images"]):
     orig = image.copy()
 
     # detect people in the image
-    (rects, weights) = hog.detectMultiScale(image, winStride=(4, 4),
-                                            padding=(8, 8), scale=1.05)
+    (rects, weights) = hog.detectMultiScale(image, hitThreshold=0.01, winStride=(8, 8),
+                                            padding=(16, 16), scale=1.05)
 
     # draw the original bounding boxes
     for (x, y, w, h) in rects:
@@ -54,6 +53,6 @@ for imagePath in paths.list_images(args["images"]):
     print("time:", end - start)
 
     # show the output images
-    # cv2.imshow("Before NMS", orig)
+    cv2.imshow("Before NMS", orig)
     cv2.imshow("After NMS", image)
     cv2.waitKey(0)
