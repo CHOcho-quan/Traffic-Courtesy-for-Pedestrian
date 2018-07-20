@@ -135,8 +135,8 @@ def process_image(image):
     return image_result
 
 
-white_output = 'result1.mp4'
-clip1 = VideoFileClip("test1.avi")
+white_output = 'result3.mp4'
+clip1 = VideoFileClip("test3.mp4")
 white_clip = clip1.fl_image(process_image)
 final_clip = clips_array([[clip1, white_clip]])
 final_clip.write_videofile(white_output, audio=False)

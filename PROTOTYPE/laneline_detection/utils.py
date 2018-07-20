@@ -11,8 +11,7 @@ def detect_lines(lines1, imshape):
     for t in norms.keys():
         for norm in norms[t]:
             for n, m, b in norm[0:1]:
-                # print m
-                # print n
+                # y = mx + b
                 if (m > 0) and (int(n) > 50):
                     right = True
                 if (m < 0) and (int(n) > 50):
@@ -118,7 +117,7 @@ def average_lines(lines, imshape):
                 fit = np.polyfit((x1, x2), (y1, y2), 1)
                 m = fit[0]
                 b = fit[1]
-                print m, b
+                # print m, b
                 norm = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
                 if m > 0:
                     hough_pts['m_right'].append(m)
@@ -162,6 +161,41 @@ def average_lines(lines, imshape):
         right_lane = [0, 0, 0, 0]
 
     return left_lane, right_lane
+
+
+def abs_sobel_thresh(img, orient='x', thresh_min=90, thresh_max=255):
+    if orient == 'x':
+        abs_sobel = np.absolute(cv2.Sobel(img, cv2.CV_64F, 1, 0))
+    if orient == 'y':
+        abs_sobel = np.absolute(cv2.Sobel(img, cv2.CV_64F, 0, 1))
+
+    binary_output = np.zeros_like(abs_sobel)
+    binary_output[(abs_sobel >= thresh_min) & (abs_sobel <= thresh_max)] = 1
+
+    # Return the result
+    return binary_output
+
+
+def mag_thresh(img, sobel_kernel=3, mag_thresh=(90, 255)):
+    sobelx = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=sobel_kernel)
+    sobely = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=sobel_kernel)
+    gradmag = np.sqrt(sobelx ** 2 + sobely ** 2)
+
+    binary_output = np.zeros_like(gradmag)
+    binary_output[(gradmag >= mag_thresh[0]) & (gradmag <= mag_thresh[1])] = 1
+
+    return binary_output
+
+
+def dir_threshold(img, sobel_kernel=3, thresh=(0, np.pi / 2)):
+    sobelx = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=sobel_kernel)
+    sobely = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=sobel_kernel)
+
+    absgraddir = np.arctan2(np.absolute(sobely), np.absolute(sobelx))
+    binary_output = np.zeros_like(absgraddir)
+    binary_output[(absgraddir >= thresh[0]) & (absgraddir <= thresh[1])] = 1
+
+    return binary_output
 
 
 # Canny filter

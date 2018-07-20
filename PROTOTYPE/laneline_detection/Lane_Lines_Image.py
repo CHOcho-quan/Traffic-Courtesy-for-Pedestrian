@@ -10,29 +10,35 @@ imageio.plugins.ffmpeg.download()
 
 
 def process_image():
-    image = cv2.imread('./test_pages/test9.jpg')
+    image = cv2.imread('./test_pages/test10.jpg')
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
     enhance_white = utils.white_enhance(image)
     enhance_yellow = utils.yellow_enhance(image)
     final_enhance = cv2.addWeighted(enhance_white, 0.8, enhance_yellow, 1, 0)
-    # rt, binary = cv2.threshold(final_enhance, 0, 255, cv2.THRESH_OTSU, cv2.THRESH_BINARY)
+    # rt, bianry = cv2.threshold(final_enhance, 127, 255, cv2.THRESH_BINARY)
+    # t, binary = cv2.threshold(final_enhance, 0, 255, cv2.THRESH_OTSU, cv2.THRESH_BINARY)
+    # plt.imshow(binary)
+    # plt.show()
+    equ = cv2.equalizeHist(final_enhance, plt.gray())
+    plt.imshow(equ)
+    plt.show()
 
     # Define a kernel size and apply Gaussian smoothing
     kernel_size = 5
     blur_gray = cv2.GaussianBlur(final_enhance, (kernel_size, kernel_size), 0)
 
-    plt.imshow(blur_gray, plt.gray())
-    plt.show()
+    # plt.imshow(blur_gray, plt.gray())
+    # plt.show()
 
     # Define our parameters for Canny and apply
-    # binary = cv2.threshold(blur_gray)
     canny = utils.canny_thresh(blur_gray)
     hls = utils.hls_thresh(image)
     white = utils.thresh_white(image)
     yellow = utils.thresh_yellow(image)
 
-    plt.imshow(canny)
+    # cv2.imwrite("canny.png", canny)
+    plt.imshow(canny, plt.gray())
     plt.show()
 
     combined = np.zeros_like(canny)
@@ -75,17 +81,11 @@ def process_image():
     cv2.fillPoly(mask_right, vertices_middle_triangle, 0)
     cv2.fillPoly(mask_right, vertices_right_triangle, ignore_mask_color)
 
-    plt.imshow(mask_base)
-    plt.show()
-
     masked_edges_whole = cv2.bitwise_and(canny, mask_whole)
     masked_edges_base = cv2.bitwise_and(canny, mask_base)
     masked_edges_least = cv2.bitwise_and(canny, mask_least)
     masked_edges_left = cv2.bitwise_and(canny, mask_left)
     masked_edges_right = cv2.bitwise_and(canny, mask_right)
-
-    plt.imshow(masked_edges_least)
-    plt.show()
 
     plt.imshow(masked_edges_base)
     plt.show()
@@ -150,6 +150,10 @@ def process_image():
 
     plt.imshow(image_result)
     plt.show()
+
+    image_result = cv2.cvtColor(image_result, cv2.COLOR_BGR2RGB)
+
+    cv2.imwrite("imageresult.png", image_result)
 
     return image_result
 
