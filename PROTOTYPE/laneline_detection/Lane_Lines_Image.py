@@ -4,6 +4,7 @@ import numpy as np
 import cv2
 import imageio
 import utils
+import Framework
 import math
 
 imageio.plugins.ffmpeg.download()
@@ -121,26 +122,34 @@ def process_image():
     l, r = utils.detect_lines(lines_least, imshape)
     if l and r:
         line_image = utils.draw_lines(lines_least, line_image, imshape)
+        line_result = lines_least
     elif (not l) and r:
+        # using base mask to try if OK
         l, r = utils.detect_lines(lines_base, imshape)
         if l & r:
             line_image = utils.draw_lines(lines_base, line_image, imshape)
+            line_result = lines_base
         else:
             line_image = utils.draw_lines(lines_left, line_image, imshape)
+            line_result = lines_left
     elif (not r) and l:
+        # using base mask to try if OK
         l, r = utils.detect_lines(lines_base, imshape)
         if l & r:
             line_image = utils.draw_lines(lines_base, line_image, imshape)
+            line_result = lines_base
         else:
             line_image = utils.draw_lines(lines_right, line_image, imshape)
+            line_result = lines_right
     else:
+        # using base mask to try if OK
         l, r = utils.detect_lines(lines_base, imshape)
         if l & r:
             line_image = utils.draw_lines(lines_base, line_image, imshape)
+            line_result = lines_base
         else:
             line_image = utils.draw_lines(lines_whole, line_image, imshape)
-
-    # print(lines_whole)
+            line_result = lines_whole
 
     # Iterate over the output "lines_whole" and draw lines_whole on a blank image
     if line_image is not None:
@@ -148,10 +157,12 @@ def process_image():
     else:
         image_result = image
 
-    plt.imshow(image_result)
-    plt.show()
+    Framework.is_courtesy(image_result, line_result, [(0, 100), (100, 400)])
 
     image_result = cv2.cvtColor(image_result, cv2.COLOR_BGR2RGB)
+
+    plt.imshow(image_result)
+    plt.show()
 
     cv2.imwrite("imageresult.png", image_result)
 

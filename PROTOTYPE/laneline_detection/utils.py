@@ -108,6 +108,74 @@ def hough_filter(lines):
     return norms
 
 
+# Get the line's position to determine whether to wait or not
+def get_lines(lines1, imshape):
+    if lines1 is None:
+        return None
+    norms = hough_filter(lines1)
+
+    m_total_right = 0
+    n_total_right = 0
+    m_total_left = 0
+    n_total_left = 0
+    b_total_right = 0
+    b_total_left = 0
+    for t in norms.keys():
+        for norm in norms[t]:
+            for n, m, b in norm[0:1]:
+                if m > 0:
+                    m_total_right += m * n
+                    n_total_right += n
+                    b_total_right += b * n
+                else:
+                    m_total_left += m * n
+                    n_total_left += n
+                    b_total_left += b * n
+
+    if m_total_left != 0 or b_total_left != 0:
+        left = True
+        b_left = b_total_left / n_total_left
+        m_left = m_total_left / n_total_left
+        '''y = mx + b'''
+        if b_left < imshape[0]:
+            xa = 0
+            ya = b_left
+        else:
+            ya = imshape[0]
+            xa = (ya - b_left) / m_left
+        ya2 = imshape[0] * 1.8 / 3
+        xa2 = (ya2 - b_left) / m_left
+    else:
+        left = False
+
+    if m_total_right != 0 or b_total_right != 0:
+        right = True
+        b_right = b_total_right / n_total_right
+        m_right = m_total_right / n_total_right
+        '''y = mx + b'''
+        x_try = imshape[1]
+        y_try = imshape[1] * m_right + b_right
+        if y_try < imshape[0]:
+            xb = x_try
+            yb = y_try
+        else:
+            yb = imshape[0]
+            xb = (yb - b_right) / m_right
+        yb1 = imshape[0] * 1.8 / 3
+        xb1 = (yb1 - b_right) / m_right
+    else:
+        right = False
+
+    if left and right:
+        return m_left, b_left, m_right, b_right
+    elif left and not right:
+        return m_left, b_left, 0, 0
+    elif right and not left:
+        return 0, 0, m_right, b_right
+    else:
+        return 0, 0, 0, 0
+
+
 # finding the average line
 def average_lines(lines, imshape):
     hough_pts = {'m_left': [], 'b_left': [], 'norm_left': [], 'm_right': [], 'b_right': [], 'norm_right': []}
