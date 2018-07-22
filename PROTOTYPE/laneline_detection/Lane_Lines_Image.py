@@ -12,6 +12,7 @@ imageio.plugins.ffmpeg.download()
 
 def process_image():
     image = cv2.imread('./test_pages/test10.jpg')
+    print image.size
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
     enhance_white = utils.white_enhance(image)

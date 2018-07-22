@@ -125,6 +125,7 @@ def process_image(image):
             line_image = utils.draw_lines(lines_whole, line_image, imshape)
 
     # print(lines_whole)
+    line_image = cv2.cvtColor(line_image, cv2.COLOR_RGB2BGR)
 
     # Iterate over the output "lines_whole" and draw lines_whole on a blank image
     if line_image is not None:
@@ -132,11 +133,13 @@ def process_image(image):
     else:
         image_result = image
 
+    cv2.putText(image_result, "LQ", (0, imshape[0]), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 0, 0), 2)
+
     return image_result
 
 
-white_output = 'result3.mp4'
-clip1 = VideoFileClip("test3.mp4")
-white_clip = clip1.fl_image(process_image)
-final_clip = clips_array([[clip1, white_clip]])
-final_clip.write_videofile(white_output, audio=False)
+# white_output = 'result3.mp4'
+# clip1 = VideoFileClip("test3.mp4")
+# white_clip = clip1.fl_image(process_image)
+# final_clip = clips_array([[clip1, white_clip]])
+# final_clip.write_videofile(white_output, audio=False)
