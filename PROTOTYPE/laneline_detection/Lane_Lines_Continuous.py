@@ -8,8 +8,20 @@ from moviepy.editor import *
 import utils
 
 
-def process_image(image):
+def get_line_image(image):
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+
+    # sobelx = cv2.Sobel(gray, cv2.CV_64F, 1, 0, 3)
+    # sobely = cv2.Sobel(gray, cv2.CV_64F, 0, 1, 3)
+    # mag = utils.mag_thresh(gray)
+    # dir = utils.dir_threshold(gray)
+    # abs = utils.abs_sobel_thresh(gray)
     correct = utils.preprocess(image)
+    # plt.imshow(mag, plt.gray())
+    # plt.show()
+    # plt.imshow(dir, plt.gray())
+    # plt.show()
 
     # Define a kernel size and apply Gaussian smoothing
     kernel_size = 5
@@ -84,51 +96,20 @@ def process_image(image):
     lines_right = cv2.HoughLinesP(masked_edges_right, rho, theta, threshold, np.array([]),
                                   min_line_length, max_line_gap)
 
-    # norms = utils.hough_filter(lines_least)
-    # for t in norms.keys():
-    #     for norm in norms[t]:
-    #         for x1, x2, y1, y2 in norm[1:]:
-    #             cv2.line(line_image, (x1, y1), (x2, y2), (255, 0, 0), 5)
-
     l, r = utils.detect_lines(lines_base, imshape)
     if l and r:
-        line_image = utils.draw_lines(lines_base, line_image, imshape)
-        line_result = lines_least
-        mask_result = mask_least
+        line_image, ml, bl, mr, br = utils.draw_lines_continuous(lines_base, line_image, imshape)
     elif (not l) and r:
-        # using base mask to try if OK
-        l, r = utils.detect_lines(lines_base, imshape)
-        if l & r:
-            line_image = utils.draw_lines(lines_base, line_image, imshape)
-            line_result = lines_base
-            mask_result = mask_base
-        else:
-            line_image = utils.draw_lines(lines_left, line_image, imshape)
-            line_result = lines_left
-            mask_result = mask_left
+        line_image, ml, bl, mr, br = utils.draw_lines_continuous(lines_left, line_image, imshape)
     elif (not r) and l:
-        # using base mask to try if OK
-        l, r = utils.detect_lines(lines_base, imshape)
-        if l & r:
-            line_image = utils.draw_lines(lines_base, line_image, imshape)
-            line_result = lines_base
-            mask_result = mask_base
-        else:
-            line_image = utils.draw_lines(lines_right, line_image, imshape)
-            line_result = lines_right
-            mask_result = mask_right
+        line_image, ml, bl, mr, br = utils.draw_lines_continuous(lines_right, line_image, imshape)
     else:
-        # using base mask to try if OK
-        l, r = utils.detect_lines(lines_base, imshape)
-        if l & r:
-            line_image = utils.draw_lines(lines_base, line_image, imshape)
-            line_result = lines_base
-            mask_result = mask_base
-        else:
-            line_image = utils.draw_lines(lines_whole, line_image, imshape)
-            line_result = lines_whole
-            mask_result = mask_whole
+        line_image, ml, bl, mr, br = utils.draw_lines_continuous(lines_whole, line_image, imshape)
 
+    return imshape, ml, bl, mr, br
+
+
+def process_image(image, line_image):
     # Iterate over the output "lines_whole" and draw lines_whole on a blank image
     if line_image is not None:
         image_result = cv2.addWeighted(image, 0.8, line_image, 1, 0)
@@ -140,8 +121,47 @@ def process_image(image):
     return image_result
 
 
-white_output = 'result5.mp4'
-clip1 = VideoFileClip("test5.mp4").subclip(0, 20)
-white_clip = clip1.fl_image(process_image)
-final_clip = clips_array([[clip1, white_clip]])
-final_clip.write_videofile(white_output, audio=False)
+video = cv2.VideoCapture("solidYellowLeft.mp4")
+success, frame = video.read()
+line_image = np.copy(frame) * 0
+
+# last time's m and b, also the experienced answer
+lml = lbl = lmr = lbr = 0
+# last time's error of m and b
+xml = xbl = xmr = xbr = 5
+# this time's m and b
+imshape, ml, bl, mr, br = get_line_image(frame)
+errorness1 = 20
+errorness2 = 1
+line_image = utils.draw_lines_mb(ml, bl, mr, br, line_image, imshape)
+
+while success:
+    frame = process_image(frame, line_image)
+
+    cv2.imshow("window", frame)
+    cv2.waitKey(0)
+    success, frame = video.read()
+    lml = ml
+    lbl = bl
+    lmr = mr
+    lbr = br
+    imshape, ml, bl, mr, br = get_line_image(frame)
+
+    Kg2ml = (errorness2**2 + xml**2) / (errorness2**2 + xml**2 + errorness1**2)
+    ml = lml + (ml - lml) * Kg2ml**0.5
+    xml = 5 * (1 - Kg2ml)**0.5
+
+    Kg2bl = (errorness2 ** 2 + xbl ** 2) / (errorness2 ** 2 + xbl ** 2 + errorness1 ** 2)
+    bl = lbl + (bl - lbl) * Kg2bl ** 0.5
+    xbl = 5 * (1 - Kg2bl) ** 0.5
+
+    Kg2mr = (errorness2 ** 2 + xmr ** 2) / (errorness2 ** 2 + xmr ** 2 + errorness1 ** 2)
+    mr = lmr + (mr - lmr) * Kg2mr ** 0.5
+    xmr = 5 * (1 - Kg2mr) ** 0.5
+
+    Kg2br = (errorness2 ** 2 + xbr ** 2) / (errorness2 ** 2 + xbr ** 2 + errorness1 ** 2)
+    br = lbr + (br - lbr) * Kg2br ** 0.5
+    xbr = 5 * (1 - Kg2br) ** 0.5
+
+    line_image = np.copy(frame) * 0
+    line_image = utils.draw_lines_mb(ml, bl, mr, br, line_image, imshape)

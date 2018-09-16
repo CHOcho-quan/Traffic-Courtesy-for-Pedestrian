@@ -4,17 +4,90 @@ import math
 import matplotlib.pyplot as plt
 
 
+# Before everything, make a difference
+def preprocess(image):
+    # t, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_OTSU, cv2.THRESH_BINARY)
+    hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
+    lightness = np.mean(hsv[:, :, 2])
+    var = np.std(hsv[:, :, 2])
+
+    hue = np.mean(hsv[:, :, 0])
+
+    if lightness < 95:
+        gamma = 1 / 2.2
+        little = image.astype(np.float32) / 255
+        corrected1 = np.power(little, gamma)
+        corrected1 = (corrected1 * 255).astype(np.uint8)
+        print "...Correcting Lightness..."
+    else:
+        corrected1 = image
+
+    if var > 150:
+        hsv2 = cv2.cvtColor(corrected1, cv2.COLOR_RGB2HSV)
+        corrected2 = cv2.equalizeHist(hsv2[:, :, 2])
+        corrected2 = cv2.cvtColor(corrected2, cv2.COLOR_HSV2RGB)
+        print "...Correcting Contrast..."
+    else:
+        corrected2 = corrected1
+
+    if hue > 80:
+        enhance_white = white_enhance(corrected2)
+        enhance_yellow = yellow_enhance(corrected2)
+        corrected3 = cv2.addWeighted(enhance_white, 0.8, enhance_yellow, 1, 0)
+        print "...Correcting Hue..."
+    else:
+        corrected3 = corrected2
+
+    return corrected3
+
+
+def detect_least(lines1):
+    t1 = [0, 0]
+    left = right = False
+    norms = hough_filter(lines1)
+    total = {}
+    flag = False
+    for t in norms.keys():
+        for norm in norms[t]:
+            for n, m, b in norm[0:1]:
+                if total.keys() is None:
+                    if m > 0:
+                        t1[0] += 1
+                    else:
+                        t1[1] += 1
+                    total[m] = [m * n, n, b * n, 1]
+                else:
+                    for c in total.keys():
+                        if abs(c - m) <= 0.2:
+                            total[c][0] += m * n
+                            total[c][1] += n
+                            total[c][2] += b * n
+                            total[c][3] += 1
+                            flag = True
+                            break
+                    if not flag:
+                        if m > 0:
+                            t1[0] += 1
+                        else:
+                            t1[1] += 1
+                        total[m] = [m * n, n, b * n, 1]
+                    else:
+                        flag = False
+    return t1[0] == 1, t1[1] == 1
+
+
 # Detect lines in the image whether it's ok
 def detect_lines(lines1, imshape):
     left = right = False
     norms = hough_filter(lines1)
+
     for t in norms.keys():
         for norm in norms[t]:
             for n, m, b in norm[0:1]:
                 # y = mx + b
-                if (m > 0) and (int(n) > 50):
+                if m > 0:
                     right = True
-                if (m < 0) and (int(n) > 50):
+                if m < 0:
                     left = True
     return left, right
 
@@ -25,23 +98,51 @@ def draw_lines(lines1, line_image, imshape):
         return None
     norms = hough_filter(lines1)
 
+    total = {}
     m_total_right = 0
     n_total_right = 0
     m_total_left = 0
     n_total_left = 0
     b_total_right = 0
     b_total_left = 0
+
+    flag = False
     for t in norms.keys():
         for norm in norms[t]:
             for n, m, b in norm[0:1]:
-                if m > 0:
-                    m_total_right += m * n
-                    n_total_right += n
-                    b_total_right += b * n
+                # print m
+                if total.keys() is None:
+                    total[m] = [m * n, n, b * n, 1]
                 else:
-                    m_total_left += m * n
-                    n_total_left += n
-                    b_total_left += b * n
+                    for c in total.keys():
+                        if abs(c - m) <= 0.1:
+                            total[c][0] += m * n
+                            total[c][1] += n
+                            total[c][2] += b * n
+                            total[c][3] += 1
+                            flag = True
+                            break
+                    if not flag:
+                        total[m] = [m * n, n, b * n, 1]
+                    else:
+                        flag = False
+                # print m
+    # print total
+    maxR = -1
+    maxL = -1
+    for i in total.keys():
+        # print i
+        if i > 0 and total[i][1] * total[i][3] > maxR:
+            maxR = total[i][1] * total[i][3]
+            m_total_right = total[i][0]
+            n_total_right = total[i][1]
+            b_total_right = total[i][2]
+        elif i < 0 and total[i][1] * total[i][3] > maxL:
+            maxL = total[i][1] * total[i][3]
+            m_total_left = total[i][0]
+            n_total_left = total[i][1]
+            b_total_left = total[i][2]
+    # print m_total_right, b_total_right, n_total_right
 
     if m_total_left != 0 or b_total_left != 0:
         b_left = b_total_left / n_total_left
@@ -77,6 +178,121 @@ def draw_lines(lines1, line_image, imshape):
     return line_image
 
 
+# Draw a average line on the board
+def draw_lines_continuous(lines1, line_image, imshape):
+    if lines1 is None:
+        return None
+    norms = hough_filter(lines1)
+
+    total = {}
+    m_total_right = 0
+    n_total_right = 0
+    m_total_left = 0
+    n_total_left = 0
+    b_total_right = 0
+    b_total_left = 0
+    m_left = 0
+    b_left = 0
+    m_right = 0
+    b_right = 0
+    flag = False
+    for t in norms.keys():
+        for norm in norms[t]:
+            for n, m, b in norm[0:1]:
+                if total.keys() is None:
+                    total[m] = [m * n, n, b * n, 1]
+                else:
+                    for c in total.keys():
+                        if abs(c - m) <= 0.2:
+                            total[c][0] += m * n
+                            total[c][1] += n
+                            total[c][2] += b * n
+                            total[c][3] += 1
+                            flag = True
+                            break
+                    if not flag:
+                        total[m] = [m * n, n, b * n, 1]
+                    else:
+                        flag = False
+                # print m
+    # print total
+    maxR = -1
+    maxL = -1
+    for i in total.keys():
+        if i > 0 and total[i][1] * total[i][3] > maxR:
+            maxR = total[i][1] * total[i][3]
+            m_total_right = total[i][0]
+            n_total_right = total[i][1]
+            b_total_right = total[i][2]
+        elif i < 0 and total[i][1] * total[i][3] > maxL:
+            maxL = total[i][1] * total[i][3]
+            m_total_left = total[i][0]
+            n_total_left = total[i][1]
+            b_total_left = total[i][2]
+    # print m_total_right, b_total_right, n_total_right
+
+    if m_total_left != 0 or b_total_left != 0:
+        b_left = b_total_left / n_total_left
+        m_left = m_total_left / n_total_left
+        # print b_avg_left, m_avg_left
+        '''y = mx + b'''
+        if b_left < imshape[0]:
+            xa = 0
+            ya = b_left
+        else:
+            ya = imshape[0]
+            xa = (ya - b_left) / m_left
+        ya2 = imshape[0] * 1.8 / 3
+        xa2 = (ya2 - b_left) / m_left
+        cv2.line(line_image, (int(xa), int(ya)), (int(xa2), int(ya2)), (255, 0, 0), 5)
+
+    if m_total_right != 0 or b_total_right != 0:
+        b_right = b_total_right / n_total_right
+        m_right = m_total_right / n_total_right
+        '''y = mx + b'''
+        x_try = imshape[1]
+        y_try = imshape[1] * m_right + b_right
+        if y_try < imshape[0]:
+            xb = x_try
+            yb = y_try
+        else:
+            yb = imshape[0]
+            xb = (yb - b_right) / m_right
+        yb1 = imshape[0] * 1.8 / 3
+        xb1 = (yb1 - b_right) / m_right
+        cv2.line(line_image, (int(xb), int(yb)), (int(xb1), int(yb1)), (255, 0, 0), 5)
+
+    return line_image, m_left, b_left, m_right, b_right
+
+
+# draw line image based on m and b
+def draw_lines_mb(ml, bl, mr, br, line_image, imshape):
+    if bl < imshape[0]:
+        xa = 0
+        ya = bl
+    else:
+        ya = imshape[0]
+        xa = (ya - bl) / ml
+    ya2 = imshape[0] * 1.8 / 3
+    xa2 = (ya2 - bl) / ml
+
+    xt = imshape[1]
+    yt = imshape[1] * mr + br
+    if yt < imshape[0]:
+        xb = xt
+        yb = yt
+    else:
+        yb = imshape[0]
+        xb = (yb - br) / mr
+    yb1 = imshape[0] * 1.8 / 3
+    xb1 = (yb1 - br) / mr
+
+    cv2.line(line_image, (int(xb), int(yb)), (int(xb1), int(yb1)), (255, 0, 0), 5)
+    cv2.line(line_image, (int(xa), int(ya)), (int(xa2), int(ya2)), (255, 0, 0), 5)
+
+    return line_image
+
+
 # a Hough Filter based on theta and similarity of the line
 def hough_filter(lines):
     norms = {}
@@ -94,7 +310,7 @@ def hough_filter(lines):
             else:
                 for t in norms.keys():
                     if (abs(t - theta) < 5) and (((float(norms[t][0][0][1]) - fit[0]) ** 2 + (
-                            float(norms[t][0][0][2]) - fit[1]) ** 2) ** 0.5 < 10):
+                            float(norms[t][0][0][2]) - fit[1]) ** 2) ** 0.5 < 20):
                         norms[t].append(norm)
                         flag = True
                         break
@@ -244,7 +460,7 @@ def abs_sobel_thresh(img, orient='x', thresh_min=90, thresh_max=255):
     return binary_output
 
 
-def mag_thresh(img, sobel_kernel=3, mag_thresh=(90, 255)):
+def mag_thresh(img, sobel_kernel=3, mag_thresh=(30, 255)):
     sobelx = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=sobel_kernel)
     sobely = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=sobel_kernel)
     gradmag = np.sqrt(sobelx ** 2 + sobely ** 2)
@@ -267,7 +483,7 @@ def dir_threshold(img, sobel_kernel=3, thresh=(0, np.pi / 2)):
 
 
 # Canny filter
-def canny_thresh(img, low=30, high=90):
+def canny_thresh(img, low=20, high=90):
     canny = cv2.Canny(img, low, high)
     binary_out = np.zeros_like(canny)
     binary_out[canny == 255] = 1
@@ -307,7 +523,7 @@ def thresh_yellow(image):
 # Enhance the yellow part of the image
 def yellow_enhance(img_rgb):
     img_hsv = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2HSV)
-    lower_yellow = np.array([15, 80, 46])
+    lower_yellow = np.array([18, 80, 46])
     upper_yellow = np.array([34, 255, 255])
     mask = cv2.inRange(img_hsv, lower_yellow, upper_yellow)
     gray = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2GRAY)
@@ -331,3 +547,15 @@ def thresh_white(image):
     mask = cv2.inRange(image, lower, upper)
 
     return mask
+
+
+# Judging whether lines are same in continuous algorithm
+def isSame(ml, bl, mr, br):
+    if abs(ml - mr) < 0.4:
+        pass
+    else:
+        return False
+    if abs(bl - br) < 50:
+        return True
+    else:
+        return False
