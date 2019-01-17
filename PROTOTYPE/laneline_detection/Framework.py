@@ -33,13 +33,13 @@ def is_courtesy(image, lines, people):
     '''
     # considering if we need to wait. To add situations by if, please return True
     if mr * peoplex + br < max(peopley1, peopley2):
-        print 1
+        print (1)
         if ml * peoplex + bl < max(peopley1, peopley2):
-            print 2
+            print (2)
             cv2.putText(image, "Please Wait!", (0, imshape[0]), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 0, 0), 2)
             return True
 
     # considering if we need not to wait
-    print 3
+    print (3)
     cv2.putText(image, "It's OK!", (0, imshape[0]), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 0, 0), 2)
     return False

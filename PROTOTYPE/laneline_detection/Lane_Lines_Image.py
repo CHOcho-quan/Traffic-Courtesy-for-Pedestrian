@@ -5,24 +5,21 @@ import cv2
 import imageio
 import utils
 import math
-from filterpy import kalman
-
+import glob
 imageio.plugins.ffmpeg.download()
 
 
-def process_image():
-    image = cv2.imread('./test_pages/testWrost.jpg')
+def process_image(path, out):
+    image = cv2.imread(path)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
 
-    # sobelx = cv2.Sobel(gray, cv2.CV_64F, 1, 0, 3)
-    # sobely = cv2.Sobel(gray, cv2.CV_64F, 0, 1, 3)
     # mag = utils.mag_thresh(gray)
     # dir = utils.dir_threshold(gray)
     # abs = utils.abs_sobel_thresh(gray)
     correct = utils.preprocess(image)
-    # plt.imshow(mag, plt.gray())
-    # plt.show()
+    #plt.imshow(correct, plt.gray())
+    #plt.show()
     # plt.imshow(dir, plt.gray())
     # plt.show()
 
@@ -47,10 +44,10 @@ def process_image():
 
     # cv2.imwrite("canny.png", canny)
     # plt.subplot(211)
-    plt.imshow(canny, plt.gray())
+    #plt.imshow(canny, plt.gray())
     # plt.subplot(212)
     # plt.imshow(canny2)
-    plt.show()
+    #plt.show()
 
     mask_whole = np.zeros_like(canny)
     mask_base = np.zeros_like(canny)
@@ -98,11 +95,11 @@ def process_image():
     masked_edges_left = cv2.bitwise_and(canny, mask_left)
     masked_edges_right = cv2.bitwise_and(canny, mask_right)
 
-    plt.subplot(211)
-    plt.imshow(masked_edges_least)
-    plt.subplot(212)
-    plt.imshow(masked_edges_base)
-    plt.show()
+    #plt.subplot(211)
+    #    plt.imshow(masked_edges_least)
+    #   plt.subplot(212)
+    #   plt.imshow(masked_edges_base)
+    #   plt.show()
 
     # Define the Hough transform parameters
     # Make a blank the same size as our image to draw on
@@ -178,6 +175,7 @@ def process_image():
         image_result = image
 
     # Framework.is_courtesy(image_result, line_result, [(0, 100), (100, 400)])
+    '''
     plt.subplot(221)
     plt.imshow(mask_result)
     plt.subplot(222)
@@ -188,7 +186,15 @@ def process_image():
     plt.imshow(masked_edges_base)
     plt.show()
 
+    plt.imshow(image_result)
+    plt.show()
+    '''
+    cv2.imwrite(out, image_result)
+
     return image_result
 
-
-process_image()
+images = glob.glob("samples/*.jpg")
+i = 0
+for image in images:
+    process_image(image, "a{0}.jpg".format(i))
+    i += 1

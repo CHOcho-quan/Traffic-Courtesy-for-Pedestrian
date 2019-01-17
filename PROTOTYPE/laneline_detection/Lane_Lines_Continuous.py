@@ -10,18 +10,8 @@ import utils
 
 def get_line_image(image):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
 
-    # sobelx = cv2.Sobel(gray, cv2.CV_64F, 1, 0, 3)
-    # sobely = cv2.Sobel(gray, cv2.CV_64F, 0, 1, 3)
-    # mag = utils.mag_thresh(gray)
-    # dir = utils.dir_threshold(gray)
-    # abs = utils.abs_sobel_thresh(gray)
     correct = utils.preprocess(image)
-    # plt.imshow(mag, plt.gray())
-    # plt.show()
-    # plt.imshow(dir, plt.gray())
-    # plt.show()
 
     # Define a kernel size and apply Gaussian smoothing
     kernel_size = 5
@@ -76,11 +66,11 @@ def get_line_image(image):
 
     # Define the Hough transform parameters
     # Make a blank the same size as our image to draw on
-    rho = 2  # distance resolution in pixels of the Hough grid
+    rho = 1  # distance resolution in pixels of the Hough grid
     theta = np.pi / 180  # angular resolution in radians of the Hough grid
-    threshold = 30  # minimum number of votes (intersections in Hough grid cell)
-    min_line_length = 35  # minimum number of pixels making up a line
-    max_line_gap = 10  # maximum gap in pixels between connectable line segments
+    threshold = 40  # minimum number of votes (intersections in Hough grid cell)
+    min_line_length = 45  # minimum number of pixels making up a line
+    max_line_gap = 5  # maximum gap in pixels between connectable line segments
     line_image = np.copy(image) * 0  # creating a blank to draw lines_whole on
 
     # Run Hough on edge detected image
@@ -89,8 +79,8 @@ def get_line_image(image):
                                   30, max_line_gap)
     lines_base = cv2.HoughLinesP(masked_edges_base, 1, theta, threshold, np.array([]),
                                  min_line_length, max_line_gap)
-    lines_least = cv2.HoughLinesP(masked_edges_least, 1, theta, 35, np.array([]),
-                                  40, max_line_gap)
+    # lines_least = cv2.HoughLinesP(masked_edges_least, 1, theta, 35, np.array([]),
+    #                               40, max_line_gap)
     lines_left = cv2.HoughLinesP(masked_edges_left, rho, theta, threshold, np.array([]),
                                  min_line_length, max_line_gap)
     lines_right = cv2.HoughLinesP(masked_edges_right, rho, theta, threshold, np.array([]),
@@ -121,47 +111,59 @@ def process_image(image, line_image):
     return image_result
 
 
-video = cv2.VideoCapture("solidYellowLeft.mp4")
-success, frame = video.read()
-line_image = np.copy(frame) * 0
-
-# last time's m and b, also the experienced answer
-lml = lbl = lmr = lbr = 0
-# last time's error of m and b
-xml = xbl = xmr = xbr = 5
-# this time's m and b
-imshape, ml, bl, mr, br = get_line_image(frame)
-errorness1 = 20
-errorness2 = 1
-line_image = utils.draw_lines_mb(ml, bl, mr, br, line_image, imshape)
-
-while success:
-    frame = process_image(frame, line_image)
-
-    cv2.imshow("window", frame)
-    cv2.waitKey(0)
-    success, frame = video.read()
-    lml = ml
-    lbl = bl
-    lmr = mr
-    lbr = br
-    imshape, ml, bl, mr, br = get_line_image(frame)
-
-    Kg2ml = (errorness2**2 + xml**2) / (errorness2**2 + xml**2 + errorness1**2)
-    ml = lml + (ml - lml) * Kg2ml**0.5
-    xml = 5 * (1 - Kg2ml)**0.5
-
-    Kg2bl = (errorness2 ** 2 + xbl ** 2) / (errorness2 ** 2 + xbl ** 2 + errorness1 ** 2)
-    bl = lbl + (bl - lbl) * Kg2bl ** 0.5
-    xbl = 5 * (1 - Kg2bl) ** 0.5
-
-    Kg2mr = (errorness2 ** 2 + xmr ** 2) / (errorness2 ** 2 + xmr ** 2 + errorness1 ** 2)
-    mr = lmr + (mr - lmr) * Kg2mr ** 0.5
-    xmr = 5 * (1 - Kg2mr) ** 0.5
-
-    Kg2br = (errorness2 ** 2 + xbr ** 2) / (errorness2 ** 2 + xbr ** 2 + errorness1 ** 2)
-    br = lbr + (br - lbr) * Kg2br ** 0.5
-    xbr = 5 * (1 - Kg2br) ** 0.5
-
-    line_image = np.copy(frame) * 0
-    line_image = utils.draw_lines_mb(ml, bl, mr, br, line_image, imshape)
+# video = cv2.VideoCapture("test7.mp4")
+# success, frame = video.read()
+# if success:
+#     line_image = np.copy(frame) * 0
+#
+# writer = cv2.VideoWriter('./lalala2.avi', cv2.VideoWriter_fourcc('I', '4', '2', '0'), 20, (1280, 720))
+# # last time's m and b, also the experienced answer
+# lml = lbl = lmr = lbr = 0
+# # last time's error of m and b
+# xml = xbl = xmr = xbr = 5
+# # this time's m and b
+# imshape, ml, bl, mr, br = get_line_image(frame)
+# errorness1 = 105
+# errorness2 = 5
+# line_image = utils.draw_lines_mb(ml, bl, mr, br, line_image, imshape)
+#
+# # Using Kalman Filter to get a better result
+# while success:
+#     frame = process_image(frame, line_image)
+#     writer.write(frame)
+#
+#     # cv2.imshow("window", frame)
+#     # cv2.waitKey(0)
+#     success, frame = video.read()
+#     lml = ml
+#     lbl = bl
+#     lmr = mr
+#     lbr = br
+#     imshape, ml, bl, mr, br = get_line_image(frame)
+#
+#     if ml == 0:
+#         ml = lml
+#         bl = lbl
+#     if mr == 0:
+#         mr = lmr
+#         br = lbr
+#
+#     Kg2ml = (errorness2**2 + xml**2) / (errorness2**2 + xml**2 + errorness1**2)
+#     ml = lml + (ml - lml) * Kg2ml**0.5
+#     xml = 5 * (1 - Kg2ml)**0.5
+#
+#     Kg2bl = (errorness2 ** 2 + xbl ** 2) / (errorness2 ** 2 + xbl ** 2 + errorness1 ** 2)
+#     bl = lbl + (bl - lbl) * Kg2bl ** 0.5
+#     xbl = 5 * (1 - Kg2bl) ** 0.5
+#
+#     Kg2mr = (errorness2 ** 2 + xmr ** 2) / (errorness2 ** 2 + xmr ** 2 + errorness1 ** 2)
+#     mr = lmr + (mr - lmr) * Kg2mr ** 0.5
+#     xmr = 5 * (1 - Kg2mr) ** 0.5
+#
+#     Kg2br = (errorness2 ** 2 + xbr ** 2) / (errorness2 ** 2 + xbr ** 2 + errorness1 ** 2)
+#     br = lbr + (br - lbr) * Kg2br ** 0.5
+#     xbr = 5 * (1 - Kg2br) ** 0.5
+#
+#     # print frame
+#     line_image = np.copy(frame) * 0
+#     line_image = utils.draw_lines_mb(ml, bl, mr, br, line_image, imshape)
