@@ -14,7 +14,7 @@ def pedestrian_detection_image(image):
     hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
     imshape = image.shape
 
-    # image = mpimg.imread("webwxgetmsgimg.jpeg")
+    # image = mpimg.imread("xuezhang.jpeg")
     image = imutils.resize(image, width=min(400, image.shape[1]))
     orig = image.copy()
 
@@ -54,8 +54,8 @@ def pedestrian_detection_image(image):
     return image
 
 
-white_output = 'result1.mp4'
-clip1 = VideoFileClip("test1.mp4").subclip(0, 30)
+white_output = 'result4pedes.mp4'
+clip1 = VideoFileClip("test5.mp4")
 white_clip = clip1.fl_image(pedestrian_detection_image)
 final_clip = clips_array([[clip1, white_clip]])
 final_clip.write_videofile(white_output, audio=False)
