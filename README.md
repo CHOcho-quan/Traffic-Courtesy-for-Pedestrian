@@ -1,7 +1,6 @@
 # Traffic-Courtesy for Pedestrian
-> Environment：Ubuntu 16.04 & OpenCV 3.4.1  & Python 2.7  
+> Environment：Ubuntu 16.04 & OpenCV 3.4.1  & Python 3
 >
-> ReferrenceCodes:   [https://blog.csdn.net/garfielder007/article/details/50441048](https://blog.csdn.net/garfielder007/article/details/50441048)
 
 ### 1.LaneLine Detection Based on Hough & Canny
 
@@ -31,5 +30,13 @@ Other trials but not accepted:
 
 ![imageResult](./DOC/imageresult2.png)
 
-### 2.Pedestrian Detection Based on HOG & SVM
+### 2.Pedestrian Detection Based on YOLOv3
+
+We've tried HoG & SVM for the sake of faster and easier detection. However the result is not satisfied and we have to turn to deep learning framework. Since we need faster and real-time detection, we choose to use YOLO as our pedestrian detection.
+
+We also do some refreshment on YOLO. Implementing it by Keras with tensorflow backend makes us attachable to its base. We've done neural network pruning and weight clustering to YOLO in order to make it faster and meet our need. The YOLO pruning and weight clustering Github Repo is here: [YOLOPruning&WeightClustering](https://github.com/CHOcho-quan/YOLOv3-Compression)
+
+![Total](./DOC/Pedestrian.png)
+
+![It's OK](./DOC/result.png)
 
