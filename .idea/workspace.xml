@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="633122f0-6b3e-4861-93be-54d6375f6f93" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/PROTOTYPE/pedestrian _detection/images/hyd.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PROTOTYPE/laneline_detection/Framework.py" beforeDir="false" afterPath="$PROJECT_DIR$/PROTOTYPE/laneline_detection/Framework.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PROTOTYPE/laneline_detection/Lane_Lines_Continuous.py" beforeDir="false" afterPath="$PROJECT_DIR$/PROTOTYPE/laneline_detection/Lane_Lines_Continuous.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PROTOTYPE/laneline_detection/Lane_Lines_Image.py" beforeDir="false" afterPath="$PROJECT_DIR$/PROTOTYPE/laneline_detection/Lane_Lines_Image.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PROTOTYPE/laneline_detection/test_pages/test_sY.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PROTOTYPE/laneline_detection/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/PROTOTYPE/laneline_detection/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PROTOTYPE/pedestrian _detection/images/webwxgetmsgimg.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/PROTOTYPE/pedestrian _detection/images/xuezhang.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PROTOTYPE/pedestrian _detection/pedestrian_detection_video.py" beforeDir="false" afterPath="$PROJECT_DIR$/PROTOTYPE/pedestrian _detection/pedestrian_detection_video.py" afterDir="false" />
-    </list>
+    <list default="true" id="633122f0-6b3e-4861-93be-54d6375f6f93" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,24 +15,24 @@
         <entry file="file://$PROJECT_DIR$/PROTOTYPE/laneline_detection/Lane_Lines_Image.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="510">
-              <caret line="40" column="37" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="37" />
+              <caret line="40" column="37" selection-start-line="40" selection-start-column="37" selection-end-line="40" selection-end-column="37" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Lane_Lines_Video.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Lane_Lines_Video.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PROTOTYPE/laneline_detection/Lane_Lines_Video.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="569">
+            <state relative-caret-position="1185">
               <caret line="83" column="13" selection-start-line="83" selection-start-column="13" selection-end-line="83" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Framework.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Framework.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PROTOTYPE/laneline_detection/Framework.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="521">
+            <state relative-caret-position="585">
               <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
             </state>
           </provider>
@@ -109,19 +99,6 @@
               <item name="Traffic-Courtesy-for-Pedestrian" type="462c0819:PsiDirectoryNode" />
               <item name="PROTOTYPE" type="462c0819:PsiDirectoryNode" />
               <item name="laneline_detection" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Traffic-Courtesy-for-Pedestrian" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Traffic-Courtesy-for-Pedestrian" type="462c0819:PsiDirectoryNode" />
-              <item name="PROTOTYPE" type="462c0819:PsiDirectoryNode" />
-              <item name="pedestrian _detection" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Traffic-Courtesy-for-Pedestrian" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Traffic-Courtesy-for-Pedestrian" type="462c0819:PsiDirectoryNode" />
-              <item name="PROTOTYPE" type="462c0819:PsiDirectoryNode" />
-              <item name="pedestrian _detection" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -681,21 +658,21 @@
     <entry file="file://$PROJECT_DIR$/PROTOTYPE/laneline_detection/Lane_Lines_Image.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
-          <caret line="40" column="37" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PROTOTYPE/laneline_detection/Lane_Lines_Video.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="569">
-          <caret line="83" column="13" selection-start-line="83" selection-start-column="13" selection-end-line="83" selection-end-column="13" />
+          <caret line="40" column="37" selection-start-line="40" selection-start-column="37" selection-end-line="40" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PROTOTYPE/laneline_detection/Framework.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="521">
+        <state relative-caret-position="585">
           <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PROTOTYPE/laneline_detection/Lane_Lines_Video.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1185">
+          <caret line="83" column="13" selection-start-line="83" selection-start-column="13" selection-end-line="83" selection-end-column="13" />
         </state>
       </provider>
     </entry>

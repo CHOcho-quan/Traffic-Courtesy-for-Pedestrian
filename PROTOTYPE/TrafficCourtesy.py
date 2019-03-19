@@ -67,22 +67,22 @@ if __name__ == "__main__":
         if px is not None or py is not None:
             if max(py[0], py[1]) < frame.shape[1] * 3 / 8:
                 print(1)
-                cv2.putText(frame, "It's OK!", (0, frame.shape[0]), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 0, 0), 2)
+                cv2.putText(frame, "It's OK!", (0, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 2)
             else:
                 peoplex = (px[0] + px[1]) / 2
                 if mr * peoplex + br < max(py[0], py[1]) + 10:
                     if ml * peoplex + bl < max(py[0], py[1]) + 10:
                         print(2)
-                        cv2.putText(frame, "Please Wait!", (0, frame.shape[0]), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 0, 0), 2)
+                        cv2.putText(frame, "Please Wait!", (0, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 2)
                     else:
                         print(3)
-                        cv2.putText(frame, "It's OK!", (0, frame.shape[0]), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 0, 0), 2)
+                        cv2.putText(frame, "It's OK!", (0, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 2)
                 else:
                     print(4)
-                    cv2.putText(frame, "It's OK!", (0, frame.shape[0]), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 0, 0), 2)
+                    cv2.putText(frame, "It's OK!", (0, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 2)
         else:
             print(5)
-            cv2.putText(frame, "It's OK!", (0, frame.shape[0]), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 0, 0), 2)
+            cv2.putText(frame, "It's OK!", (0, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 2)
 
         frame = process_image(frame, line_image)
         writer.write(frame)

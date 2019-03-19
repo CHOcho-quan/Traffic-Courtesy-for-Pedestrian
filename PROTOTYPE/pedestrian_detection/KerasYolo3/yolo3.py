@@ -523,13 +523,13 @@ def draw_boxes(image, boxes, labels, obj_thresh):
                 print(labels[i] + ': ' + str(box.classes[i]*100) + '%')
 
         if label == 0:
-            cv2.rectangle(image, (box.xmin,box.ymin), (box.xmax,box.ymax), (0,255,0), 3)
-            cv2.putText(image,
-                        label_str + ' ' + str(box.get_score()),
-                        (box.xmin, box.ymin - 13),
-                        cv2.FONT_HERSHEY_SIMPLEX,
-                        1e-3 * image.shape[0],
-                        (0,255,0), 2)
+            cv2.rectangle(image, (box.xmin,box.ymin - int((box.ymax - box.ymin) / 7)), (box.xmax,box.ymax - int((box.ymax - box.ymin) / 7)), (0,255,0), 3)
+            # cv2.putText(image,
+            #             label_str + ' ' + str(box.get_score()),
+            #             (box.xmin, box.ymin - 13),
+            #             cv2.FONT_HERSHEY_SIMPLEX,
+            #             1e-3 * image.shape[0],
+            #             (0,255,0), 2)
             person_x = (box.xmin, box.xmax)
             person_y = (box.ymin, box.ymax)
 
@@ -619,7 +619,7 @@ if __name__ == '__main__':
               "book", "clock", "vase", "scissors", "teddy bear", "hair drier", "toothbrush"]
     # make the yolov3 model to predict 80 classes on COCO
     yolov3 = make_yolov3_model()
-              
+
     # load the weights trained on COCO into the model
     weight_reader = WeightReader("./yolov3.weights")
     weight_reader.load_weights(yolov3)
@@ -633,14 +633,14 @@ if __name__ == '__main__':
         # run the prediction
         yolos = yolov3.predict(new_image)
         boxes = []
-        
+
         for i in range(len(yolos)):
             # decode the output of the network
             boxes += decode_netout(yolos[i][0], anchors[i], obj_thresh, nms_thresh, net_h, net_w)
-    
+
         # correct the sizes of the bounding boxes
         correct_yolo_boxes(boxes, image_h, image_w, net_h, net_w)
-        
+
         # suppress non-maximal boxes
         do_nms(boxes, nms_thresh)
 
@@ -652,4 +652,3 @@ if __name__ == '__main__':
 
         cv2.imwrite("out{0}.jpg".format(j), image)
         j += 1
-
