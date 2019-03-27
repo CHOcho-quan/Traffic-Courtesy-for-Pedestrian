@@ -19,7 +19,7 @@ from laneline_detection import utils
 from pedestrian_detection.KerasYolo3.yolo3 import *
 
 if __name__ == "__main__":
-    video = cv2.VideoCapture('./laneline_detection/test7.mp4')
+    video = cv2.VideoCapture('./laneline_detection/test6.mp4')
     success, frame = video.read()
     if success:
         line_image = np.copy(frame) * 0
