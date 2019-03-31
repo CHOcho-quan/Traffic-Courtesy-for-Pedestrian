@@ -10,8 +10,8 @@ imageio.plugins.ffmpeg.download()
 
 
 def process_image(path, out):
-    image = cv2.imread(path)
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    imageraw = cv2.imread(path)
+    image = cv2.cvtColor(imageraw, cv2.COLOR_BGR2RGB)
     gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
 
     # mag = utils.mag_thresh(gray)
@@ -170,7 +170,7 @@ def process_image(path, out):
 
     # Iterate over the output "lines_whole" and draw lines_whole on a blank image
     if line_image is not None:
-        image_result = cv2.addWeighted(image, 0.8, line_image, 1, 0)
+        image_result = cv2.addWeighted(imageraw, 0.8, line_image, 1, 0)
     else:
         image_result = image
 
@@ -193,8 +193,4 @@ def process_image(path, out):
 
     return image_result
 
-images = glob.glob("samples/*.jpg")
-i = 0
-for image in images:
-    process_image(image, "a{0}.jpg".format(i))
-    i += 1
+process_image('./test_pages/test_curb.jpg', './out.jpg')
