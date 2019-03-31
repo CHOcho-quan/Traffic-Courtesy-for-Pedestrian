@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="633122f0-6b3e-4861-93be-54d6375f6f93" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PROTOTYPE/TrafficCourtesy.py" beforeDir="false" afterPath="$PROJECT_DIR$/PROTOTYPE/TrafficCourtesy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PROTOTYPE/laneline_detection/Lane_Lines_Image.py" beforeDir="false" afterPath="$PROJECT_DIR$/PROTOTYPE/laneline_detection/Lane_Lines_Image.py" afterDir="false" />
-    </list>
+    <list default="true" id="633122f0-6b3e-4861-93be-54d6375f6f93" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,11 +11,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Lane_Lines_Image.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Lane_Lines_Image.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PROTOTYPE/laneline_detection/Lane_Lines_Image.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
+            <state relative-caret-position="2717">
               <caret line="195" column="37" selection-start-line="195" selection-start-column="37" selection-end-line="195" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="utils.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/PROTOTYPE/laneline_detection/utils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="329">
+              <caret line="480" selection-start-line="480" selection-end-line="480" />
             </state>
           </provider>
         </entry>
@@ -58,7 +63,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="720" />
@@ -68,7 +73,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -91,6 +95,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -253,18 +258,18 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="720" extended-state="0" />
+    <frame x="0" y="23" width="1280" height="720" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32662538" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32921174" />
       <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32662538" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39876354" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39876354" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -594,13 +599,6 @@
     <entry file="file://$PROJECT_DIR$/PROTOTYPE/pedestrian _detection/pedestrian_detection_video.py" />
     <entry file="file://$PROJECT_DIR$/PROTOTYPE/pedestrian _detection/images/xuezhang.jpeg" />
     <entry file="file://$PROJECT_DIR$/PROTOTYPE/pedestrian _detection/pedestrian_detection_image.py" />
-    <entry file="file://$PROJECT_DIR$/PROTOTYPE/laneline_detection/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7392">
-          <caret line="36" column="38" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PROTOTYPE/laneline_detection/Lane_Lines_Video.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1185">
@@ -627,8 +625,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PROTOTYPE/laneline_detection/Lane_Lines_Image.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
+        <state relative-caret-position="2717">
           <caret line="195" column="37" selection-start-line="195" selection-start-column="37" selection-end-line="195" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PROTOTYPE/laneline_detection/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="480" selection-start-line="480" selection-end-line="480" />
         </state>
       </provider>
     </entry>
